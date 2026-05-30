@@ -1,0 +1,23 @@
+
+.message-user{
+    display: flex;
+    justify-content: end;
+    align-items: start;
+}
+.message-bot{
+    display: flex;
+    align-items: start;
+}
+.message-text{
+    background-color: rgb(238, 238, 238);
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-bottom: 15px;
+    max-width: 250px;
+}
+.message-profile{
+    width: 47px;
+
+}
