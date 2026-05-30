@@ -8,15 +8,41 @@
     <script src="react.js"></script>
     <script src="https://unpkg.com/supersimpledev/react.js"></script>
     <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
-
+    <script src="chatbot.js"></script>
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
     <script type="text/babel">
       //chat input component
-      function ChatInput(){
+      function ChatInput({chatMessages,setChatMessages}){
+        const [inputText,setInputText] = React.useState('');
+        function saveInputText(event){
+          setInputText(event.target.value);
+        }
+        function sendMessgae(){
+          const newChatMessages = [
+            ...chatMessages,
+            {
+              message: inputText,
+              sender:'user',
+              id: crypto.randomUUID()
+            }
+          ]
+          setChatMessages(newChatMessages);
+
+          const responce = Chatbot.getResponse(inputText);
+          setChatMessages([
+            ...newChatMessages,
+            {
+              message: responce,
+              sender:'bot',
+              id: crypto.randomUUID()
+            }
+          ]);
+          setInputText('');
+        }
         return (
           <>
-            <input placeholder="Enter a message" size="40"/>
-            <button>Send</button>
+            <input placeholder="Enter a message" size="40" onChange={saveInputText} value={inputText}/>
+            <button onClick={sendMessgae}>Send</button>
           </>
         );
       }
@@ -47,13 +73,49 @@
           </div>
         )
       }
-      //app conponent
-      function App(){
+
+      //Chatmessages component
+      function ChatMessages({chatMessages}){
+        const chatMessageConponents = chatMessages.map((chatMessage)=>{
+          return(
+              <ChatMessage message={chatMessage.message} sender={chatMessage.sender} key={chatMessage.id} />
+            )
+        });
+
         return (
           <>
-            <ChatInput />
-            <ChatMessage message="HEllow" sender="user"/>
-            <ChatMessage message="Sani" sender="bot"/>
+            {chatMessageConponents}
+          </>
+        );
+      }
+      //app conponent
+      function App(){
+        const [chatMessages,setChatMessages] = React.useState(
+          [{
+          message:'HEllow',
+          sender:'user',
+          id:'1'
+        },{
+          message:'HWt',
+          sender:'bot',
+          id:'2'
+        },{
+          message:'nth',
+          sender:'user',
+          id:'3'
+        },{
+          message:'lol',
+          sender:'bot',
+          id:'4'
+        }]
+        );
+        //const [chatMessages,setChatMessages] = array;
+        //const chatMessages = array[0];
+        //const setChatMessages = array[1];
+        return(
+          <>
+            <ChatInput chatMessages={chatMessages} setChatMessages={setChatMessages}/>
+            <ChatMessages chatMessages={chatMessages}/>
           </>
         );
       }
