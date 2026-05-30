@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chatbot</title>
+  </head>
+  <body>
+    <div class="js-container"></div>
+    <script src="react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+      //chat input component
+      function ChatInput(){
+        return (
+          <>
+            <input placeholder="Enter a message" size="40"/>
+            <button>Send</button>
+          </>
+        );
+      }
+
+      //chat message component
+      function ChatMessage({message,sender}){
+        // shortcut for veribale 
+        //const {message, sender} = props;
+        
+        //removed beacuse of && shortcut
+        /*
+        if(sender === 'bot'){
+          return (
+          <div>
+            <img src="resources/img/robot.png" width="50" />
+            {message}
+          </div>
+        )
+        }
+        */
+        return (
+          // used && guard for img selection
+          //replaced by ternary operator
+          <div>
+            {sender === 'bot' && <img src="resources/img/robot.png" width="50" />}
+            {message}
+            {sender === 'user' && <img src="resources/img/user.png" width="50" />}
+          </div>
+        )
+      }
+      //app conponent
+      function App(){
+        return (
+          <>
+            <ChatInput />
+            <ChatMessage message="HEllow" sender="user"/>
+            <ChatMessage message="Sani" sender="bot"/>
+          </>
+        );
+      }
+      //react render
+      const container = document.querySelector('.js-container');
+      ReactDOM.createRoot(container).render(<App/>);
+    </script>
+  </body>
+</html>
