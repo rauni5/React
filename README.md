@@ -21,14 +21,6 @@ The application simulates a simple chat interface where users can send and displ
 * Vite
 * CSS
 
-## Project Structure
-
-src/
-├── components/
-├── assets/
-├── App.jsx
-└── main.jsx
-
 ## Concepts Practiced
 
 * Functional Components
